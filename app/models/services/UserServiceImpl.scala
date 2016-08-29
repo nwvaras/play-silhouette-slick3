@@ -63,7 +63,8 @@ class UserServiceImpl @Inject() (userDAO: UserDAO) extends UserService {
       case None => // Insert a new user
         userDAO.save(User(
           userID = UUID.randomUUID(),
-          loginInfo = profile.loginInfo,
+          providerId = profile.loginInfo.providerID,
+          providerKey = profile.loginInfo.providerKey,
           firstName = profile.firstName,
           lastName = profile.lastName,
           fullName = profile.fullName,

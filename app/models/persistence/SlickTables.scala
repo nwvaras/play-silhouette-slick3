@@ -2,12 +2,10 @@ package models.persistence
 
 import java.util.UUID
 
-import com.mohiva.play.silhouette.api.LoginInfo
-import models.User
 import models.entities._
+import models.{ DBPasswordInfo, User }
 import play.api.Play
 import play.api.db.slick.{ DatabaseConfigProvider, HasDatabaseConfig }
-import play.api.libs.json.Json
 import slick.driver.JdbcProfile
 /**
  * The companion object.
@@ -51,7 +49,8 @@ object SlickTables extends HasDatabaseConfig[JdbcProfile] {
    */
   class UsersTable(tag: Tag) extends BaseUserTable[User](tag, "users") {
     def id = column[UUID]("user_id")
-    def loginInfo = column[LoginInfo]("login_info")
+    def providerId = column[String]("provider_id")
+    def providerKey = column[String]("provider_key")
     def firstName = column[Option[String]]("first_name")
     def lastName = column[Option[String]]("last_name")
     def fullName = column[Option[String]]("full_name")
@@ -60,17 +59,7 @@ object SlickTables extends HasDatabaseConfig[JdbcProfile] {
     def activated = column[Boolean]("activated")
     def marketId = column[Option[Long]]("market_id")
     def rut = column[Option[String]]("rut")
-    //def market = foreignKey("market_k", marketId, marketsTableQ)(_.id, onUpdate=ForeignKeyAction.Restrict, onDelete=ForeignKeyAction.Cascade)
-    implicit val boolColumnType = MappedColumnType.base[LoginInfo, String](
-      { loginInfo => Json.obj("providerId" -> loginInfo.providerID, "providerKey" -> loginInfo.providerKey).toString }, // map Bool to Int
-      { string =>
-        {
-          val js = Json.parse(string)
-          LoginInfo((js \ "providerId").toString, (js \ "providerKey").toString)
-        }
-      } // map Int to Bool
-    )
-    def * = (id, loginInfo, firstName, lastName, fullName, email, avatarURL, activated, rut, marketId, created) <> ((User.apply _).tupled, User.unapply)
+    def * = (id, providerId, providerKey, firstName, lastName, fullName, email, avatarURL, activated, rut, marketId, created) <> ((User.apply _).tupled, User.unapply)
   }
   val usersTableQ: TableQuery[UsersTable] = TableQuery[UsersTable]
 
@@ -147,4 +136,40 @@ object SlickTables extends HasDatabaseConfig[JdbcProfile] {
     def * = (id, name, created) <> (ProductType.tupled, ProductType.unapply)
   }
   val productTypesTableQ: TableQuery[ProductTypesTable] = TableQuery[ProductTypesTable]
+
+  //////////////////////////////////////////////////////
+
+  class PasswordInfosTable(tag: Tag) extends Table[DBPasswordInfo](tag, "passwordinfo") {
+    def hasher = column[String]("hasher")
+    def password = column[String]("password")
+    def salt = column[Option[String]]("salt")
+    def providerId = column[String]("provider_id")
+    def providerKey = column[String]("provider_key")
+    def * = (hasher, password, salt, providerId, providerKey) <> ((DBPasswordInfo.apply _).tupled, DBPasswordInfo.unapply)
+  }
+  val passwordInfosTableQ: TableQuery[PasswordInfosTable] = TableQuery[PasswordInfosTable]
+
+  /*
+  class OAuth1InfosTable(tag: Tag) extends Table[OAuth1Info](tag, "oauth1info") {
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+    def token = column[String]("token")
+    def secret = column[String]("secret")
+    def providerId = column[String]("provider_id")
+    def providerKey = column[String]("provider_key")
+    def * = (id.?, token, secret, loginInfoId) <> ((OAuth1Info.apply _).tupled, OAuth1Info.unapply)
+  }
+  val oAuth1InfosTableQ: TableQuery[OAuth1InfosTable] = TableQuery[OAuth1InfosTable]
+
+  class OAuth2InfosTable(tag: Tag) extends Table[OAuth2Info](tag, "oauth2info") {
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+    def accessToken = column[String]("accesstoken")
+    def tokenType = column[Option[String]]("tokentype")
+    def expiresIn = column[Option[Int]]("expiresin")
+    def refreshToken = column[Option[String]]("refreshtoken")
+    def providerId = column[String]("provider_id")
+    def providerKey = column[String]("provider_key")
+    def * = (id.?, accessToken, tokenType, expiresIn, refreshToken, loginInfoId) <> ((OAuth2Info.apply _).tupled, OAuth2Info.unapply)
+  }
+  val oAuth2InfosTableQ: TableQuery[OAuth2InfosTable] = TableQuery[OAuth2InfosTable]
+  */
 }

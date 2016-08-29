@@ -1,6 +1,7 @@
 package models.daos
 
 import java.util.UUID
+import javax.inject.Singleton
 
 import models.AuthToken
 import models.daos.AuthTokenDAOImpl._
@@ -12,6 +13,7 @@ import scala.concurrent.Future
 /**
  * Give access to the [[AuthToken]] object.
  */
+@Singleton
 class AuthTokenDAOImpl extends AuthTokenDAO {
 
   /**

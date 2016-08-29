@@ -2,14 +2,13 @@ package models
 
 import java.util.UUID
 
-import com.mohiva.play.silhouette.api.{ Identity, LoginInfo }
+import com.mohiva.play.silhouette.api.{ LoginInfo, Identity }
 import models.entities.DateMapper
 
 /**
  * The user object.
  *
  * @param userID The unique ID of the user.
- * @param loginInfo The linked login info.
  * @param firstName Maybe the first name of the authenticated user.
  * @param lastName Maybe the last name of the authenticated user.
  * @param fullName Maybe the full name of the authenticated user.
@@ -17,9 +16,11 @@ import models.entities.DateMapper
  * @param avatarURL Maybe the avatar URL of the authenticated provider.
  * @param activated Indicates that the user has activated its registration.
  */
+//Json.obj("providerId" -> loginInfo.providerID, "providerKey" -> loginInfo.providerKey).toString }
 case class User(
   userID: UUID,
-  loginInfo: LoginInfo,
+  providerId: String,
+  providerKey: String,
   firstName: Option[String],
   lastName: Option[String],
   fullName: Option[String],
@@ -44,4 +45,6 @@ case class User(
       case _ => None
     }
   }
+
+  val loginInfo = LoginInfo(providerId, providerKey)
 }

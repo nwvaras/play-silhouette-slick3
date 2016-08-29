@@ -1,0 +1,53 @@
+New log file opened at Mon Aug 29 19:50:55 CLT 2016 by 78704@DiBadas
+Sending msg to client play-fork-run-612aa372-36dd-49b3-a719-38a7ba80892b: DetachedLogEvent(LogMessage(debug,sbt server socket logs are in: C:\Users\Nicolas\play-silhouette-seed\.sbtserver\connections\master.log))
+Sending msg to client play-fork-run-612aa372-36dd-49b3-a719-38a7ba80892b: DetachedLogEvent(LogMessage(debug,sbt client logs are in: C:\Users\Nicolas\play-silhouette-seed\.sbtserver\connections\play-fork-run-612aa372-36dd-49b3-a719-38a7ba80892b.log))
+Dropping message DetachedLogEvent(LogMessage(debug,sbt client logs are in: C:\Users\Nicolas\play-silhouette-seed\.sbtserver\connections\play-fork-run-612aa372-36dd-49b3-a719-38a7ba80892b.log)) because client play-fork-run-612aa372-36dd-49b3-a719-38a7ba80892b of an exception serializing and sending: java.net.SocketException: Connection reset by peer: socket write error
+Dropping message DetachedLogEvent(LogMessage(debug,sbt server socket logs are in: C:\Users\Nicolas\play-silhouette-seed\.sbtserver\connections\master.log)) because client play-fork-run-612aa372-36dd-49b3-a719-38a7ba80892b of an exception serializing and sending: java.net.SocketException: Connection reset by peer: socket write error
+stack trace sending message was 
+java.net.SocketException: Connection reset by peer: socket write error
+	at java.net.SocketOutputStream.socketWrite0(Native Method)
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:109)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:153)
+	at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+	at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+	at java.io.DataOutputStream.flush(DataOutputStream.java:123)
+	at sbt.impl.ipc.Peer.send(IPC.scala:79)
+	at sbt.impl.ipc.Peer.send(IPC.scala:83)
+	at sbt.impl.ipc.Peer.sendString(IPC.scala:106)
+	at sbt.impl.ipc.Peer.sendJson(IPC.scala:119)
+	at sbt.server.SbtClientHandler$$anonfun$send$1.apply$mcV$sp(SbtClientHandler.scala:128)
+	at sbt.server.SbtClientHandler.wrappedSend(SbtClientHandler.scala:113)
+	at sbt.server.SbtClientHandler.send(SbtClientHandler.scala:128)
+	at sbt.server.SbtClientHandler$clientThread$.run(SbtClientHandler.scala:42)
+stack trace sending message was 
+java.net.SocketException: Connection reset by peer: socket write error
+	at java.net.SocketOutputStream.socketWrite0(Native Method)
+	at java.net.SocketOutputStream.socketWrite(SocketOutputStream.java:109)
+	at java.net.SocketOutputStream.write(SocketOutputStream.java:153)
+	at java.io.BufferedOutputStream.flushBuffer(BufferedOutputStream.java:82)
+	at java.io.BufferedOutputStream.flush(BufferedOutputStream.java:140)
+	at java.io.DataOutputStream.flush(DataOutputStream.java:123)
+	at sbt.impl.ipc.Peer.send(IPC.scala:79)
+	at sbt.impl.ipc.Peer.send(IPC.scala:83)
+	at sbt.impl.ipc.Peer.sendString(IPC.scala:106)
+	at sbt.impl.ipc.Peer.sendJson(IPC.scala:119)
+	at sbt.server.SbtClientHandler$$anonfun$send$1.apply$mcV$sp(SbtClientHandler.scala:128)
+	at sbt.server.SbtClientHandler.wrappedSend(SbtClientHandler.scala:113)
+	at sbt.server.SbtClientHandler.send(SbtClientHandler.scala:128)
+	at sbt.server.SbtServerSocketHandler$$anon$1.run(SbtServerSocketHandler.scala:93)
+Reading next message from client.
+Sending msg to client play-fork-run-612aa372-36dd-49b3-a719-38a7ba80892b: DetachedLogEvent(LogMessage(debug,sbt general server logs are in: C:\Users\Nicolas\play-silhouette-seed\.sbtserver\master.log))
+Client play-fork-run-612aa372-36dd-49b3-a719-38a7ba80892b closed, java.net.SocketException: socket is closed, shutting down
+Dropping message DetachedLogEvent(LogMessage(debug,sbt general server logs are in: C:\Users\Nicolas\play-silhouette-seed\.sbtserver\master.log)) because client play-fork-run-612aa372-36dd-49b3-a719-38a7ba80892b of an exception serializing and sending: java.net.SocketException: socket is closed
+stack trace sending message was 
+java.net.SocketException: socket is closed
+	at sbt.impl.ipc.Peer.send(IPC.scala:74)
+	at sbt.impl.ipc.Peer.send(IPC.scala:83)
+	at sbt.impl.ipc.Peer.sendString(IPC.scala:106)
+	at sbt.impl.ipc.Peer.sendJson(IPC.scala:119)
+	at sbt.server.SbtClientHandler$$anonfun$send$1.apply$mcV$sp(SbtClientHandler.scala:128)
+	at sbt.server.SbtClientHandler.wrappedSend(SbtClientHandler.scala:113)
+	at sbt.server.SbtClientHandler.send(SbtClientHandler.scala:128)
+	at sbt.server.SbtServerSocketHandler$$anon$1.run(SbtServerSocketHandler.scala:94)
+Client play-fork-run-612aa372-36dd-49b3-a719-38a7ba80892b thread exiting.
+Dropping message (0,ReceivedResponse()) to dead client play-fork-run-612aa372-36dd-49b3-a719-38a7ba80892b
